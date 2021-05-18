@@ -6,6 +6,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { useHistory } from "react-router";
+import { useAuth } from "../contexts/Auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,13 +36,17 @@ const useStyles = makeStyles((theme) => ({
 
 const LogInCard = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { login } = useAuth();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    login(email, password);
     console.log(email, password);
+    history.push("/");
   };
 
   return (

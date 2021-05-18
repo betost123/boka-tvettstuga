@@ -2,6 +2,10 @@ import React from "react";
 import "./App.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import LogInPage from "./LogInPage/LogInPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "./HomePage/HomePage";
+import { AuthProvider } from "./contexts/Auth";
+import PrivateRoute from "./components/PrivateRoute";
 
 const theme = createMuiTheme({
   palette: {
@@ -42,7 +46,14 @@ function App() {
   return (
     <div style={{ background: theme.palette.primary.light, height: "100vh" }}>
       <ThemeProvider theme={theme}>
-        <LogInPage />
+        <Router>
+          <AuthProvider>
+            <Switch>
+              <Route exact path='/login' component={LogInPage} />
+              <PrivateRoute exact path='/' component={HomePage} />
+            </Switch>
+          </AuthProvider>
+        </Router>
       </ThemeProvider>
     </div>
   );
